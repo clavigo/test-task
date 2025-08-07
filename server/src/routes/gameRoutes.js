@@ -3,4 +3,5 @@ import { gameController } from "../controllers/gameController.js";
 
 export const gameRouter = new express.Router();
 
-gameRouter.get("/", gameController.startSession);
+gameRouter.get("/game", gameController.startSession);
+gameRouter.get("/game/spin", gameController.spin);
