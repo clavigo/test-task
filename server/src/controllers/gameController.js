@@ -1,20 +1,22 @@
 import { gameService } from "../services/gameService.js";
+import { tokenUtils } from "../utils/tokenUtils.js";
 
-const createSession = (req, res) => {
-  const token = gameService.generateToken();
+const startSession = (req, res) => {
+  const sessionId = tokenUtils.generateToken();
+  const session = gameService.createSession(sessionId);
 
-  console.log(token);
+  console.log(sessionId);
 
-  res.cookie("sessionId", token, {
+  res.cookie("sessionId", sessionId, {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
     sameSite: "strict",
     maxAge: 24 * 60 * 60 * 1000,
   });
 
-  res.json({ message: token });
+  res.json({ credits: session.credits });
 };
 
 export const gameController = {
-  createSession,
+  startSession,
 };

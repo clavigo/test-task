@@ -1,9 +1,11 @@
-import crypto from "crypto";
+const sessions = new Map();
 
-function generateToken() {
-  const token = crypto.randomBytes(32).toString("hex");
+const createSession = (sessionId) => {
+  const session = { credits: 10 };
+  sessions.set(sessionId, session);
+  return session;
+};
 
-  return token;
-}
-
-export const gameService = { generateToken };
+export const gameService = {
+  createSession,
+};
