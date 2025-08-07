@@ -11,7 +11,7 @@ export const authMiddleware = (req, res, next) => {
 
   try {
     const decoded = verifyToken(token);
-    req.user = decoded; // додаємо payload до req
+    req.user = decoded;
     next();
   } catch (err) {
     return res.status(401).json({ error: "Invalid token" });
