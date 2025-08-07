@@ -1,9 +1,9 @@
-import { gameService } from "../services/gameService.js";
+import { sessionService } from "../services/sessionService.js";
 import { tokenUtils } from "../utils/tokenUtils.js";
 
 const startSession = (req, res) => {
   const sessionId = tokenUtils.generateToken();
-  const session = gameService.createSession(sessionId);
+  const session = sessionService.createSession(sessionId);
 
   console.log(sessionId);
 
@@ -17,9 +17,10 @@ const startSession = (req, res) => {
   res.json({ credits: session.credits });
 };
 
-const spin = (req, res) => {
+const handleSpin = (req, res) => {
   const sessionId = req.cookies.sessionId;
-  const session = gameService.getSession(sessionId);
+
+  const session = sessionService.getSession(sessionId);
 
   if (!session) {
     return res.status(401).json({ error: "Session not found" });
@@ -31,26 +32,25 @@ const spin = (req, res) => {
 
   session.credits--;
 
-  gameService.updateSession(sessionId, session.credits);
-
-  const { result, won, reward } = gameService.spin(session.credits);
-
-  console.log("spin:", result, won, reward);
+  const { result, won, reward } = sessionService.generateRollResult(
+    session.credits
+  );
 
   if (won) {
     session.credits += reward;
-    gameService.updateSession(sessionId, session.credits);
   }
 
-  res.json({
-    result, // наприклад: ['C', 'C', 'C']
+  sessionService.updateSession(sessionId, session.credits);
+
+  return res.json({
+    result,
     won,
     reward,
     credits: session.credits,
   });
 };
 
-export const gameController = {
+export const sessionController = {
   startSession,
-  spin,
+  handleSpin,
 };

@@ -43,22 +43,17 @@ function isWin(result) {
   return result[0] === result[1] && result[1] === result[2];
 }
 
-function spin(currentCredits) {
+const shouldCheat = (credits) => {
+  if (credits >= 40 && credits <= 60) return Math.random() < 0.3;
+  if (credits > 60) return Math.random() < 0.6;
+  return false;
+};
+
+const generateRollResult = (currentCredits) => {
   let result = randomRoll();
 
-  console.log("random roll", result);
-
-  const shouldCheat = () => {
-    if (currentCredits >= 40 && currentCredits <= 60) {
-      return Math.random() < 0.3;
-    } else if (currentCredits > 60) {
-      return Math.random() < 0.6;
-    }
-    return false;
-  };
-
-  if (isWin(result) && shouldCheat()) {
-    console.log("reroll");
+  if (isWin(result) && shouldCheat(currentCredits)) {
+    console.log("rerolling win");
     result = randomRoll();
   }
 
@@ -68,12 +63,12 @@ function spin(currentCredits) {
   console.log(result, won, reward);
 
   return { result, won, reward };
-}
+};
 
-export const gameService = {
+export const sessionService = {
   createSession,
   getSession,
   updateSession,
   deleteSession,
-  spin,
+  generateRollResult,
 };
