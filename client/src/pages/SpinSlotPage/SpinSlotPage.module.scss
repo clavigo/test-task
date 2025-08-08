@@ -1,0 +1,14 @@
+@use "../../utils/variables.scss";
+
+.spinSlotPage {
+  height: 100%;
+  margin-top: 20px;
+  padding: 20px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background-color: variables.$secondary-background-color;
+  border-radius: 20px;
+}

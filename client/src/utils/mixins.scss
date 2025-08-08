@@ -1,0 +1,9 @@
+@use "./variables.scss";
+
+@mixin hover($property, $toValue) {
+  transition: #{$property} variables.$transition-duration;
+
+  &:hover {
+    #{$property}: $toValue;
+  }
+}
