@@ -5,6 +5,7 @@ import "./App.scss";
 import { AppProvider } from "./context/AppContext";
 import { RegistationPage } from "./pages/RegistrationPage";
 import { LoginPage } from "./pages/LoginPage";
+import { UnauthorizedPage } from "./pages/UnauthorizedPage";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           <Route path="/" element={<SpinSlotPage />} />
           <Route path="/registration" element={<RegistationPage />} />
           <Route path="/login" element={<LoginPage />} />
+          <Route path="/unauthorized" element={<UnauthorizedPage />} />
         </Routes>
       </div>
     </AppProvider>
