@@ -17,9 +17,9 @@ const startSession = (req, res) => {
   res.json({ credits: session.credits });
 };
 
-const handleTopUpAccount = (req, res) => {
+const handleTopUpCredits = (req, res) => {
   const sessionId = req.cookies.sessionId;
-  const { topUpAmount } = req.body;
+  const { creditsAmount } = req.body;
 
   const session = sessionService.getSession(sessionId);
 
@@ -27,7 +27,7 @@ const handleTopUpAccount = (req, res) => {
     return res.status(404).json({ error: "Session not found" });
   }
 
-  session.credits += topUpAmount;
+  session.credits += creditsAmount;
 
   sessionService.updateSession(sessionId, session.credits);
 
@@ -36,5 +36,5 @@ const handleTopUpAccount = (req, res) => {
 
 export const sessionController = {
   startSession,
-  handleTopUpAccount,
+  handleTopUpCredits,
 };
