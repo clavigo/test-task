@@ -1,5 +1,6 @@
 import { createContext, useEffect, useState } from "react";
 import api from "../services/api";
+import { useNavigate } from "react-router-dom";
 
 export const AppContext = createContext(undefined);
 
@@ -9,6 +10,7 @@ export const AppProvider = ({ children }) => {
   const [balance, setBalance] = useState(0);
   const [isSpinning, setIsSpinning] = useState(false);
   const [slots, setSlots] = useState(["x", "x", "x"]);
+  const navigate = useNavigate();
 
   const initial = async () => {
     try {
@@ -21,17 +23,6 @@ export const AppProvider = ({ children }) => {
       console.error("Error loading:", error);
     }
   };
-
-  // const postSpin = async () => {
-  //   const response = await api.post("/spin");
-
-  //   console.log(response.data);
-
-  //   setCredits(response.data.credits);
-  //   setSlots(response.data.result);
-
-  //   // console.log(response.data.result);
-  // };
 
   const revealSlots = async (result) => {
     for (let i = 0; i < result.length; i++) {
@@ -90,6 +81,20 @@ export const AppProvider = ({ children }) => {
     }
   };
 
+  const registerUser = async (username, password) => {
+    try {
+      const response = await api.post("/register", {
+        username,
+        password,
+      });
+
+      console.log("User registered:", response.data);
+      navigate("/login");
+    } catch (error) {
+      console.error("Error registering:", error);
+    }
+  };
+
   useEffect(() => {
     initial();
   }, []);
@@ -108,6 +113,7 @@ export const AppProvider = ({ children }) => {
         fetchSlots,
         cashOut,
         topUpCredits,
+        registerUser,
       }}
     >
       {children}

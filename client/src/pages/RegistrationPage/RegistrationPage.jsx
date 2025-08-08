@@ -1,15 +1,23 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import styles from "./RegistrationPage.module.scss";
+import { AppContext } from "../../context/AppContext";
 
 export const RegistationPage = () => {
+  const { registerUser } = useContext(AppContext);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    registerUser(username, password);
+  };
 
   return (
     <div className={styles.regPage}>
       <h1>Register</h1>
 
-      <form className={styles.regPage__form}>
+      <form className={styles.regPage__form} onSubmit={handleSubmit}>
         <label htmlFor="username">User name:</label>
         <input
           className={styles.regPage__input}

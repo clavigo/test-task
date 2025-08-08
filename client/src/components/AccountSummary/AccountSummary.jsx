@@ -8,7 +8,7 @@ export const AccountSummary = ({ credits, balance }) => {
   const [amount, setAmount] = useState("");
 
   const handleSubmit = async (e) => {
-    e.preventDefault(); // щоб не перезавантажувало сторінку
+    e.preventDefault();
 
     topUpCredits(amount);
   };
