@@ -8,14 +8,13 @@ export const AppContext = createContext(undefined);
 export const AppProvider = ({ children }) => {
   const [credits, setCredits] = useState(0);
   const [balance, setBalance] = useState(0);
-  const [isSpinning, setIsSpinning] = useState(false);
+  const [isSpinning, setIsSpinning] = useState([false, false, false]);
   const [slots, setSlots] = useState(["x", "x", "x"]);
   const navigate = useNavigate();
 
   const initial = async () => {
     try {
       const response = await api.get("/");
-      console.log("fetching");
 
       setCredits(response.data.credits);
       setBalance(response.data.balance);
@@ -24,8 +23,26 @@ export const AppProvider = ({ children }) => {
     }
   };
 
+  const startSpin = (index) => {
+    setIsSpinning((prev) => {
+      const updated = [...prev];
+      updated[index] = true;
+      return updated;
+    });
+  };
+
+  const stopSpin = (index) => {
+    setIsSpinning((prev) => {
+      const updated = [...prev];
+      updated[index] = false;
+      return updated;
+    });
+  };
+
   const revealSlots = async (result) => {
     for (let i = 0; i < result.length; i++) {
+      startSpin(i);
+
       await new Promise((resolve) => {
         setTimeout(
           () => {
@@ -34,9 +51,10 @@ export const AppProvider = ({ children }) => {
               updated[i] = result[i];
               return updated;
             });
+            stopSpin(i);
             resolve();
           },
-          500 * (i + 1)
+          1000 * (i + 1)
         );
       });
     }
@@ -103,6 +121,7 @@ export const AppProvider = ({ children }) => {
       });
 
       console.log("User logged in:", response.data);
+      localStorage.setItem("token", response.data.token);
       navigate("/");
     } catch (error) {
       console.error("Login error:", error);

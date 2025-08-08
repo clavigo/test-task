@@ -10,7 +10,6 @@
 }
 
 .slot {
-  // background-color: red;
   width: 100%;
   max-width: 600px;
   display: flex;
@@ -34,9 +33,9 @@
     font-weight: bold;
     text-transform: uppercase;
 
-    // &-active {
-    //   animation: spin 0.5s linear infinite;
-    // }
+    &-active {
+      animation: spin 0.4s linear infinite;
+    }
   }
 
   &__button {

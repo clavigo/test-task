@@ -1,21 +1,14 @@
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import classnames from "classnames";
 import styles from "./Slot.module.scss";
 import { AppContext } from "../../context/AppContext";
 
 export const Slot = () => {
-  const { fetchSlots, isSpinning, setIsSpinning, slots } =
-    useContext(AppContext);
+  const { fetchSlots, isSpinning, slots } = useContext(AppContext);
 
   const handleSpinClick = () => {
-    isSpinning ? setIsSpinning(false) : setIsSpinning(true);
-
     fetchSlots();
   };
-
-  useEffect(() => {
-    console.log(slots);
-  });
 
   return (
     <div className={styles.slot}>
@@ -25,7 +18,7 @@ export const Slot = () => {
             <div key={index} className={styles.slot__item}>
               <span
                 className={classnames(styles.slot__spinner, {
-                  [styles["slot__spinner-active"]]: isSpinning,
+                  [styles["slot__spinner-active"]]: isSpinning[index],
                 })}
               >
                 {symbol}

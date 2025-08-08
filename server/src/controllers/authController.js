@@ -31,7 +31,7 @@ const login = async (req, res) => {
 
   const token = generateToken({ username });
 
-  res.json({ token });
+  res.json({ token, username });
 };
 
 export const authController = {
