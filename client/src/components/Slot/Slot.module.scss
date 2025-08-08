@@ -12,6 +12,7 @@
 .slot {
   // background-color: red;
   width: 100%;
+  max-width: 600px;
   display: flex;
   flex-direction: column;
   gap: 50px;
@@ -33,6 +34,10 @@
     font-weight: bold;
     text-transform: uppercase;
     // animation: spin 0.5s linear infinite;
+
+    &-active {
+      animation: spin 0.5s linear infinite;
+    }
   }
 
   &__button {
