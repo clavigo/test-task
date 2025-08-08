@@ -1,13 +1,36 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { AppContext } from "../../context/AppContext";
 
 // eslint-disable-next-line react/prop-types
 export const AccountSummary = ({ credits, balance }) => {
-  const { cashOut } = useContext(AppContext);
+  const { cashOut, topUpCredits } = useContext(AppContext);
+  const [isInputVisible, setIsInputVisible] = useState(false);
+  const [amount, setAmount] = useState("");
+
+  const handleSubmit = async (e) => {
+    e.preventDefault(); // щоб не перезавантажувало сторінку
+
+    topUpCredits(amount);
+  };
 
   return (
     <div>
-      <p>Credits: {credits}</p>
+      <p>
+        Credits: {credits}{" "}
+        <button onClick={() => setIsInputVisible(!isInputVisible)}>+</button>
+        {isInputVisible && (
+          <form onSubmit={handleSubmit}>
+            <input
+              type="text"
+              value={amount}
+              onChange={(e) => setAmount(e.target.value)}
+              placeholder="Enter amount"
+            />
+
+            <button type="submit">Submit</button>
+          </form>
+        )}
+      </p>
       <p>
         Balance: {balance} <button onClick={cashOut}>+</button>
       </p>

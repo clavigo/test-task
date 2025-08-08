@@ -76,6 +76,20 @@ export const AppProvider = ({ children }) => {
     setBalance(response.data.balance);
   };
 
+  const topUpCredits = async (amount) => {
+    try {
+      const response = await api.post("/topUpCredits", {
+        creditsAmount: Number(amount),
+      });
+
+      console.log(response.data);
+
+      setCredits(response.data.credits);
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
   useEffect(() => {
     initial();
   }, []);
@@ -93,6 +107,7 @@ export const AppProvider = ({ children }) => {
         slots,
         fetchSlots,
         cashOut,
+        topUpCredits,
       }}
     >
       {children}
