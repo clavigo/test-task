@@ -3,6 +3,7 @@ import { SpinSlotPage } from "./pages/SpinSlotPage/SpinSlotPage";
 import { Header } from "./components/Header/Header";
 import "./App.scss";
 import { AppProvider } from "./context/AppContext";
+import { RegistationPage } from "./pages/RegistrationPage";
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
 
         <Routes>
           <Route path="/" element={<SpinSlotPage />} />
+          <Route path="/registration" element={<RegistationPage />} />
         </Routes>
       </div>
     </AppProvider>
