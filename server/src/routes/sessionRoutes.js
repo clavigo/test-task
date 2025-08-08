@@ -6,3 +6,4 @@ export const sessionRouter = new express.Router();
 
 sessionRouter.get("/", sessionController.startSession);
 sessionRouter.post("/topUpCredits", sessionController.handleTopUpCredits);
+sessionRouter.get("/cashOut", sessionController.handleCashOut);

@@ -1,7 +1,7 @@
 const sessions = new Map();
 
 const createSession = (sessionId) => {
-  const session = { credits: 10 };
+  const session = { credits: 10, balance: 0 };
   sessions.set(sessionId, session);
   return session;
 };

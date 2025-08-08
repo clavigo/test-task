@@ -14,13 +14,12 @@ const startSession = (req, res) => {
     maxAge: 24 * 60 * 60 * 1000,
   });
 
-  res.json({ credits: session.credits });
+  res.json({ credits: session.credits, balance: session.balance });
 };
 
 const handleTopUpCredits = (req, res) => {
   const sessionId = req.cookies.sessionId;
   const { creditsAmount } = req.body;
-
   const session = sessionService.getSession(sessionId);
 
   if (!session) {
@@ -34,7 +33,27 @@ const handleTopUpCredits = (req, res) => {
   res.json({ credits: session.credits });
 };
 
+const handleCashOut = (req, res) => {
+  const sessionId = req.cookies.sessionId;
+  const session = sessionService.getSession(sessionId);
+
+  if (!session) {
+    return res.status(404).json({ error: "Session not found" });
+  }
+
+  session.balance += session.credits;
+  session.credits = 0;
+
+  sessionService.updateSession(sessionId, {
+    credits: session.credits,
+    balance: session.balance,
+  });
+
+  res.json({ credits: session.credits, balance: session.balance });
+};
+
 export const sessionController = {
   startSession,
   handleTopUpCredits,
+  handleCashOut,
 };
