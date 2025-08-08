@@ -6,6 +6,7 @@ const REWARDS = {
   W: 40,
 };
 
+// Generate a random slot roll with 3 symbols
 const randomRoll = () => {
   return [
     SYMBOLS[Math.floor(Math.random() * SYMBOLS.length)],
@@ -14,6 +15,7 @@ const randomRoll = () => {
   ];
 };
 
+// Check if all three symbols are the same (win condition)
 function isWin(result) {
   return result[0] === result[1] && result[1] === result[2];
 }
@@ -24,9 +26,11 @@ const shouldCheat = (credits) => {
   return false;
 };
 
+// Generate the final roll result with possible cheating to avoid wins
 const generateRollResult = (currentCredits) => {
   let result = randomRoll();
 
+  // If roll is a win but cheating triggers, reroll to avoid payout
   if (isWin(result) && shouldCheat(currentCredits)) {
     console.log("rerolling win");
     result = randomRoll();

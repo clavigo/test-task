@@ -12,6 +12,7 @@ export const AppProvider = ({ children }) => {
   const [slots, setSlots] = useState(["x", "x", "x"]);
   const navigate = useNavigate();
 
+  // fetch initial user credits and balance from server
   const initial = async () => {
     try {
       const response = await api.get("/");
@@ -39,6 +40,7 @@ export const AppProvider = ({ children }) => {
     });
   };
 
+  // sequentially updates slots with animation delays
   const revealSlots = async (result) => {
     for (let i = 0; i < result.length; i++) {
       startSpin(i);
@@ -60,6 +62,7 @@ export const AppProvider = ({ children }) => {
     }
   };
 
+  // sends spin request, updates slots and credits on response
   const fetchSlots = async () => {
     setSlots(["x", "x", "x"]);
 
@@ -76,6 +79,7 @@ export const AppProvider = ({ children }) => {
     }
   };
 
+  // requests cash out, updates credits and balance
   const cashOut = async () => {
     const response = await api.get("/cashOut");
 
@@ -85,6 +89,7 @@ export const AppProvider = ({ children }) => {
     setBalance(response.data.balance);
   };
 
+  // sends top-up request with amount, updates credits
   const topUpCredits = async (amount) => {
     try {
       const response = await api.post("/topUpCredits", {
