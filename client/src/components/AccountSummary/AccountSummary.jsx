@@ -16,7 +16,7 @@ export const AccountSummary = ({ credits, balance }) => {
   return (
     <div>
       <p>
-        Credits: {credits}{" "}
+        Credits: {credits}
         <button onClick={() => setIsInputVisible(!isInputVisible)}>+</button>
         {isInputVisible && (
           <form onSubmit={handleSubmit}>

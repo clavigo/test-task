@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useState } from "react";
 import api from "../services/api";
 import { useNavigate } from "react-router-dom";
 
@@ -95,9 +95,19 @@ export const AppProvider = ({ children }) => {
     }
   };
 
-  useEffect(() => {
-    initial();
-  }, []);
+  const loginUser = async (username, password) => {
+    try {
+      const response = await api.post("/login", {
+        username,
+        password,
+      });
+
+      console.log("User logged in:", response.data);
+      navigate("/");
+    } catch (error) {
+      console.error("Login error:", error);
+    }
+  };
 
   return (
     <AppContext.Provider
@@ -108,12 +118,13 @@ export const AppProvider = ({ children }) => {
         setBalance,
         isSpinning,
         setIsSpinning,
-        // postSpin,
+        initial,
         slots,
         fetchSlots,
         cashOut,
         topUpCredits,
         registerUser,
+        loginUser,
       }}
     >
       {children}

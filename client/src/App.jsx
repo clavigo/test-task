@@ -4,6 +4,7 @@ import { Header } from "./components/Header/Header";
 import "./App.scss";
 import { AppProvider } from "./context/AppContext";
 import { RegistationPage } from "./pages/RegistrationPage";
+import { LoginPage } from "./pages/LoginPage";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Routes>
           <Route path="/" element={<SpinSlotPage />} />
           <Route path="/registration" element={<RegistationPage />} />
+          <Route path="/login" element={<LoginPage />} />
         </Routes>
       </div>
     </AppProvider>

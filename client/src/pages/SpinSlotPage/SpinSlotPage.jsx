@@ -1,11 +1,15 @@
 import { Slot } from "../../components/Slot";
 import styles from "./SpinSlotPage.module.scss";
 import { AccountSummary } from "../../components/AccountSummary";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { AppContext } from "../../context/AppContext";
 
 export const SpinSlotPage = () => {
-  const { credits, balance } = useContext(AppContext);
+  const { credits, balance, initial } = useContext(AppContext);
+
+  useEffect(() => {
+    initial();
+  }, []);
 
   return (
     <section className={styles.spinSlotPage}>
