@@ -5,7 +5,7 @@ const startSession = (req, res) => {
   let sessionId = req.cookies.sessionId;
 
   if (sessionId && sessionService.getSession(sessionId)) {
-    // Сесія вже існує
+    // The session already exists
     const session = sessionService.getSession(sessionId);
     return res.json({
       credits: session.credits,
@@ -13,7 +13,7 @@ const startSession = (req, res) => {
     });
   }
 
-  // Якщо сесії нема — створюємо нову
+  // If there is no session, create a new one
   sessionId = tokenUtils.generateToken();
   const session = sessionService.createSession(sessionId);
 
@@ -29,6 +29,7 @@ const startSession = (req, res) => {
     balance: session.balance,
   });
 };
+
 const handleTopUpCredits = (req, res) => {
   const sessionId = req.cookies.sessionId;
   const { creditsAmount } = req.body;
@@ -55,11 +56,6 @@ const handleCashOut = (req, res) => {
 
   session.balance += session.credits;
   session.credits = 0;
-
-  // sessionService.updateSession(sessionId, {
-  //   credits: session.credits,
-  //   balance: session.balance,
-  // });
 
   sessionService.deleteSession(sessionId);
 

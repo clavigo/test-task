@@ -16,6 +16,47 @@ It consists of:
 
 ---
 
+## API Endpoints
+
+### Sessoin routes
+
+- GET /session/
+  Starts a new session or retrieves an existing one.
+  Requires authentication via token (authMiddleware).
+  Response: Current session data including credits and balance.
+
+- POST /session/topUpCredits
+  Adds credits to the user’s session.
+  Requires authentication.
+  Request body: { creditsAmount: number }
+  Response: Updated session with new credits and balance.
+
+- GET /session/cashOut
+  Cashes out current credits to balance, resetting credits to zero.
+  Requires authentication.
+  Response: Updated session data.
+
+### Game routes
+
+- POST /game/spin
+  Performs a slot spin action.
+  Requires authentication.
+  Response: Spin result with slot symbols and updated credits/balance.
+
+### Authentication Routes
+
+- POST /auth/register
+  Registers a new user.
+  Request body: user credentials (e.g. username, password)
+  Response: Registration confirmation or error.
+
+- POST /auth/login
+  Logs in an existing user.
+  Request body: user credentials
+  Response: Authentication token (JWT) for subsequent requests.
+
+---
+
 ## Project Setup
 
 ### Backend Setup (Node.js + Express)
@@ -102,6 +143,10 @@ This approach allowed for basic session handling and user state tracking without
 
 ### Note
 
+Storing session data in a server-side Map() is better than using localStorage because it keeps sensitive information secure and prevents tampering by the client. Unlike localStorage, which is accessible and modifiable by the user’s browser, server-side storage ensures data integrity and centralized control over user sessions.
+
+### Note
+
 After initial implementation, Ostap recommended switching to a more secure and standard authentication method using **JWT (JSON Web Tokens)**.
 
 The JWT-based authentication will be implemented in a later stage of the project.
@@ -148,3 +193,31 @@ User authentication was implemented using JSON Web Tokens (JWT) and bcrypt:
 - **Protected Routes**:  
   An `authMiddleware` checks for the presence of a valid token in the `Authorization` header of incoming requests.  
   If the token is valid, the user payload is attached to the request and access is granted.
+
+---
+
+## Client routes
+
+- **/** — The main page displaying the slot machine game (SpinSlotPage).
+
+- **/registration** — User registration page where new users can create an account.
+
+- **/login** — User login page (LoginPage) for existing users to sign in.
+
+- **/unauthorized** — A page shown when a user tries to access a protected resource without proper authorization (UnauthorizedPage).
+
+--
+
+## Context Usage
+
+The app uses **React Context** (AppContext) to manage and share global state across components without prop drilling.
+
+The AppProvider component wraps the entire app and provides key state values and functions such as:
+
+- **credits** and **balance** — user’s current game credits and balance.
+
+- **slots** and **isSpinning** — state of slot machine symbols and their spinning animation.
+
+- Functions to fetch data, handle spins, update credits, user registration, login, and more.
+
+This centralized state management via context allows components at any level to access and update shared data easily and consistently.

@@ -1,6 +1,8 @@
 import { useContext, useState } from "react";
 import styles from "./LoginPage.module.scss";
 import { AppContext } from "../../context/AppContext";
+import { Button } from "../../components/Button/Button";
+import { Input } from "../../components/Input";
 
 export const LoginPage = () => {
   const { loginUser } = useContext(AppContext);
@@ -19,17 +21,18 @@ export const LoginPage = () => {
 
       <form className={styles.logPage__form} onSubmit={handleSubmit}>
         <label htmlFor="username">User name:</label>
-        <input
+
+        <Input
           className={styles.logPage__input}
           id="username"
-          type="text"
           name="username"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
         />
 
         <label htmlFor="password">Password:</label>
-        <input
+
+        <Input
           className={styles.logPage__input}
           id="password"
           type="password"
@@ -38,9 +41,11 @@ export const LoginPage = () => {
           onChange={(e) => setPassword(e.target.value)}
         />
 
-        <button className={styles.logPage__button} type="submit">
-          Login
-        </button>
+        <Button
+          type="submit"
+          className={styles.logPage__button}
+          buttonText={"Login"}
+        />
       </form>
     </div>
   );

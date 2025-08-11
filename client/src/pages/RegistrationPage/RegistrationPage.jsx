@@ -1,6 +1,8 @@
 import { useContext, useState } from "react";
 import styles from "./RegistrationPage.module.scss";
 import { AppContext } from "../../context/AppContext";
+import { Button } from "../../components/Button/Button";
+import { Input } from "../../components/Input";
 
 export const RegistationPage = () => {
   const { registerUser } = useContext(AppContext);
@@ -19,17 +21,18 @@ export const RegistationPage = () => {
 
       <form className={styles.regPage__form} onSubmit={handleSubmit}>
         <label htmlFor="username">User name:</label>
-        <input
+
+        <Input
           className={styles.regPage__input}
           id="username"
-          type="text"
           name="username"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
         />
 
         <label htmlFor="password">Password:</label>
-        <input
+
+        <Input
           className={styles.regPage__input}
           id="password"
           type="password"
@@ -38,9 +41,11 @@ export const RegistationPage = () => {
           onChange={(e) => setPassword(e.target.value)}
         />
 
-        <button className={styles.regPage__button} type="submit">
-          Register
-        </button>
+        <Button
+          type="submit"
+          className={styles.regPage__button}
+          buttonText={"Register"}
+        />
       </form>
     </div>
   );

@@ -3,7 +3,6 @@ import { sessionService } from "../services/sessionService.js";
 
 const handleSpin = (req, res) => {
   const sessionId = req.cookies.sessionId;
-
   const session = sessionService.getSession(sessionId);
 
   if (!session) {

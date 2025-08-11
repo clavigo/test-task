@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 
 export const AppContext = createContext(undefined);
 
-// eslint-disable-next-line react/prop-types
 export const AppProvider = ({ children }) => {
   const [credits, setCredits] = useState(0);
   const [balance, setBalance] = useState(0);
