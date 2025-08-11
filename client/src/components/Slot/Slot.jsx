@@ -2,6 +2,7 @@ import { useContext } from "react";
 import classnames from "classnames";
 import styles from "./Slot.module.scss";
 import { AppContext } from "../../context/AppContext";
+import { Button } from "../Button/Button";
 
 export const Slot = () => {
   const { fetchSlots, isSpinning, slots } = useContext(AppContext);
@@ -27,9 +28,11 @@ export const Slot = () => {
           ))}
       </div>
 
-      <button className={styles.slot__button} onClick={handleSpinClick}>
-        Spin!
-      </button>
+      <Button
+        className={styles.slot__button}
+        handleClick={handleSpinClick}
+        buttonText={"spin"}
+      />
     </div>
   );
 };

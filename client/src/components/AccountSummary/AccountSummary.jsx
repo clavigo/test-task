@@ -1,7 +1,8 @@
 import { useContext, useState } from "react";
 import { AppContext } from "../../context/AppContext";
+import { Button } from "../Button/Button";
+import { Input } from "../Input";
 
-// eslint-disable-next-line react/prop-types
 export const AccountSummary = ({ credits, balance }) => {
   const { cashOut, topUpCredits } = useContext(AppContext);
   const [isInputVisible, setIsInputVisible] = useState(false);
@@ -16,22 +17,28 @@ export const AccountSummary = ({ credits, balance }) => {
   return (
     <div>
       <span>Credits: {credits}</span>
-      <button onClick={() => setIsInputVisible(!isInputVisible)}>+</button>
+
+      <Button
+        handleClick={() => setIsInputVisible(!isInputVisible)}
+        buttonText={"+"}
+      />
+
       {isInputVisible && (
         <form onSubmit={handleSubmit}>
-          <input
-            type="text"
+          <Input
+            id={"topUp"}
             value={amount}
             onChange={(e) => setAmount(e.target.value)}
-            placeholder="Enter amount"
+            placeholder={"Enter amount"}
           />
 
-          <button type="submit">Submit</button>
+          <Button type="submit" buttonText={"Submit"} />
         </form>
       )}
 
       <p>
-        Balance: {balance} <button onClick={cashOut}>+</button>
+        Balance: {balance}
+        <Button handleClick={cashOut} buttonText={"+"} />
       </p>
     </div>
   );

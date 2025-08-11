@@ -1,0 +1,32 @@
+@use "./variables.scss";
+@use "./mixins.scss";
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body,
+.App {
+  height: 90%;
+  width: 100%;
+  background-color: variables.$background-color;
+  color: variables.$font-color;
+}
+
+#root {
+  height: 100%;
+  width: 100%;
+
+  padding: 20px;
+}
+
+main {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
